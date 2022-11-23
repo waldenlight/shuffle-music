@@ -50,7 +50,7 @@ class SongInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text='Unique ID for this particular song across whole site')
     song = models.ForeignKey('Song', on_delete=models.RESTRICT, null=True)
-    imprint = models.CharField(max_length=200)
+    label = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
 
     LOAN_STATUS = (
