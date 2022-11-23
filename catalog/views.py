@@ -1,7 +1,9 @@
+from django.views import generic
 from django.shortcuts import render
 
 # Create your views here.
 from .models import Song, Artist, SongInstance, Genre
+
 
 def index(request):
     """View function for home page of site."""
@@ -10,8 +12,9 @@ def index(request):
     num_songs = Song.objects.all().count()
     num_instances = SongInstance.objects.all().count()
 
-    # Available books (status = 'a')
-    num_instances_available = SongInstance.objects.filter(status__exact='a').count()
+    # Available songs (status = 'a')
+    num_instances_available = SongInstance.objects.filter(
+        status__exact='a').count()
 
     # The 'all()' is implied by default.
     num_artists = Artist.objects.count()
@@ -25,3 +28,19 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+
+class SongListView(generic.ListView):
+    model = Song
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(SongListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
+
+
+class SongDetailView(generic.DetailView):
+    model = Song
+    paginate_by = 10
