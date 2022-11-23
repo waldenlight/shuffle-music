@@ -38,13 +38,13 @@ class SongAdmin(admin.ModelAdmin):
 
 @admin.register(SongInstance)
 class SongInstanceAdmin(admin.ModelAdmin):
-    list_filter = ('status', 'release_date')
+    list_filter = ('status', 'due_back')
 
     fieldsets = (
         (None, {
             'fields': ('song', 'label', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'release_date')
+            'fields': ('status', 'due_back')
         }),
     )
